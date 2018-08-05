@@ -122,7 +122,7 @@ class CoreUI(object):
         self.root.bind("<Key>", self.event_key)
         self.root.bind('<Control-KeyPress-q>', self.close)
         self.root.bind('<Button>', self.event_mouse)
-        self.root.bind('<Configure>', self.eventmouse)
+        self.root.bind('<Configure>', self.event_mouse)
         self.text.bind('<Return>', self.autoindent)
         self.text.bind('<Tab>', self.tab2spaces4)
         self.create_tags()
@@ -135,7 +135,7 @@ class CoreUI(object):
             self.filename = sys.argv[1]
 
         if not os.access(self.filename,os.R_OK):
-            os.system("touch " + self.filename)
+            open(self.filename, 'a').close()
 
         with open(self.filename, "r") as f:
             self.loadfile(f.read())
@@ -421,9 +421,6 @@ class CoreUI(object):
             as it will discard everything.
         """
         
-        for function in self.takedown:
-            function()
-            
         self.root.destroy()
 
 
